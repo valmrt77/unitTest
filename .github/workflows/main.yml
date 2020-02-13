@@ -1,0 +1,16 @@
+name: CI/CD
+on: [push]
+
+jobs:
+  test:
+    name: checkout and test
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout project
+      uses: actions/checkout@v2
+    - name: composer install missing files
+      run: composer install
+    - name: linter
+      run: php php-cs-fixer.phar fix src/AppBundle/Util
+    - name: run unit tests
+      run: phpunit fix src/AppBundle/Util/AddFunctionTest.php
